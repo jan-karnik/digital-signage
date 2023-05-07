@@ -123,10 +123,12 @@ def image_list():
 def video_list():
     try:
         video_files = os.listdir("static/videos")
+
+        return jsonify(video_files)
     except:
         print("No local static videos yet")
 
-    return jsonify(video_files)
+        return jsonify([])
 
 
 if __name__ == "__main__":
