@@ -24,7 +24,10 @@ def download_nas_files():
     videos_on_nas = os.listdir(path_to_videos_on_nas)
 
     app_images = os.listdir(path_to_images_local)
-    app_videos = os.listdir(path_to_videos_local)
+    try:
+        app_videos = os.listdir(path_to_videos_local)
+    except:
+        print("No videos local yet")
 
     for current_image in app_images:
         os.remove(path_to_images_local + "/" + current_image)
@@ -118,7 +121,10 @@ def image_list():
 
 @app.route("/api/videos")
 def video_list():
-    video_files = os.listdir("static/videos")
+    try:
+        video_files = os.listdir("static/videos")
+    except:
+        print("No local static videos yet")
 
     return jsonify(video_files)
 
