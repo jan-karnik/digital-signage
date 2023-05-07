@@ -4,9 +4,6 @@ import shutil
 from flask import Flask, render_template, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 
-FILE_FOLDER = "/Users/karnik/Desktop/files"
-INITIAL_FILES = os.listdir(FILE_FOLDER)
-
 app = Flask(__name__)
 
 nas_source_folder = sys.argv[1]
