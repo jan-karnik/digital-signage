@@ -12,8 +12,8 @@ xset -dpms
 unclutter -idle 0.5 -root &
 
 # Make sure no popups or warning bars show up
-sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromium/Default/Preferences
-sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium/Default/Preferences
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/johnny/.config/chromium/Default/Preferences
+sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/johnny/.config/chromium/Default/Preferences
 
 
 python -m pip install -r requirements.txt
