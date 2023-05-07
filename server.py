@@ -24,6 +24,9 @@ def download_nas_files():
     videos_on_nas = os.listdir(path_to_videos_on_nas)
 
     app_images = os.listdir(path_to_images_local)
+
+    app_videos = []
+
     try:
         app_videos = os.listdir(path_to_videos_local)
     except:
@@ -47,6 +50,7 @@ def download_nas_files():
             shutil.copy(source, destination)
             print("Copied " + image_file)
 
+    os.makedirs(os.path.dirname(path_to_videos_local), exist_ok=True)
     for video_file in videos_on_nas:
         if video_file.startswith("."):
             continue
