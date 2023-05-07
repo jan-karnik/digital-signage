@@ -18,7 +18,7 @@ sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/johnny/.config/chro
 
 python -m pip install -r requirements.txt
 
-python /home/johnny/digital-signage/server.py /mnt/usb/nas &
+python /home/johnny/digital-signage/server.py /mnt/usb/nas &>> logs.txt &
 
 sleep 2
 
