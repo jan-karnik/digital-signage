@@ -18,11 +18,11 @@ sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium
 
 python -m pip install -r requirements.txt
 
-python /home/johnny/digital_signage/server.py /mnt/usb/nas &
+python /home/johnny/digital-signage/server.py /mnt/usb/nas &
 
 sleep 2
 
-chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081 &
+/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081 &
 
 
 # Activate the virtual environment
