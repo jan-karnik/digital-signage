@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Images</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- <script src="main.js"></script> -->
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: aliceblue;
+      }
+
+      img {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+      }
+
+      .image_wrapper {
+        display: flex;
+        width: 100%;
+        height: 98vh;
+        flex: 1;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+      }
+
+      .text {
+        font-size: large;
+        opacity: 0.8;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image_wrapper">
+      <img id="image" src="static/images/{{image}}" onerror="recoverFromError()" />
+
+      <video
+        id="video"
+        style="display: none"
+        width="1440"
+        height="900"
+        autoplay
+        muted
+        onended="goToImages()"
+      >
+        <source src="static/videos/{{video}}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="text">azmed.cz</p>
+  </body>
+
+  <script type="text/javascript">
+    let images = [];
+    let videos = [];
+
+    async function recoverFromError() {
+      await fetchImages();
+
+      document.getElementById("image").src = "static/images/" + images[0];
+    }
+
+    async function fetchImages() {
+      const [imageResponse, videoResponse] = await Promise.all([
+        fetch("/api/images"),
+        fetch("/api/videos"),
+      ]);
+
+      const [imageList, videoList] = await Promise.all([
+        imageResponse.json(),
+        videoResponse.json(),
+      ]);
+
+      images = imageList;
+      videos = videoList;
+    }
+
+    let nextImage = "{{next_image}}";
+
+    async function fetchNextImage() {
+      const nextImageResponse = await (await fetch("/api/image")).json();
+
+      nextImage = nextImageResponse.image;
+    }
+
+    // TODO: Add looping with videos..
+
+    async function startSlideShow() {
+      setInterval(() => {
+        document.getElementById("image").src = "static/images/" + nextImage;
+
+        fetchNextImage();
+      }, 5000);
+    }
+
+    startSlideShow();
+  </script>
+</html>

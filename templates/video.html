@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Images</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- <script src="main.js"></script> -->
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: aliceblue;
+      }
+
+      img {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+      }
+
+      .image_wrapper {
+        display: flex;
+        width: 100%;
+        height: 98vh;
+        flex: 1;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+      }
+
+      .text {
+        font-size: large;
+        opacity: 0.8;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image_wrapper">
+      <video width="1440" height="900" autoplay muted onended="goToImages()">
+        <source src="static/videos/{{video}}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="text">azmed.cz</p>
+  </body>
+  <script type="text/javascript">
+    function goToImages() {
+      window.location.replace("http://localhost:8081/");
+    }
+  </script>
+</html>
