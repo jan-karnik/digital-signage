@@ -16,7 +16,7 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/johnny/.config/ch
 sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/johnny/.config/chromium/Default/Preferences
 
 
-python -m pip install -r requirements.txt
+python -m pip install -r /home/johnny/digital-signage/requirements.txt
 
 python /home/johnny/digital-signage/server.py /mnt/usb/nas &>> logs.txt &
 

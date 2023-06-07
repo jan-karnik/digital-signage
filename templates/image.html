@@ -45,26 +45,15 @@
   <body>
     <div class="image_wrapper">
       <img id="image" src="static/images/{{image}}" onerror="recoverFromError()" />
-
-      <video
-        id="video"
-        style="display: none"
-        width="1440"
-        height="900"
-        autoplay
-        muted
-        onended="goToImages()"
-      >
-        <source src="static/videos/{{video}}" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
     </div>
     <p class="text">azmed.cz</p>
   </body>
 
   <script type="text/javascript">
     let images = [];
-    let videos = [];
+    let intervalID;
+    let isLastImage = "{{is_last_image}}";
+    let goToVideosInNextTick = "{{can_go_to_videos}}" === "True";
 
     async function recoverFromError() {
       await fetchImages();
@@ -73,24 +62,34 @@
     }
 
     async function fetchImages() {
-      const [imageResponse, videoResponse] = await Promise.all([
-        fetch("/api/images"),
-        fetch("/api/videos"),
-      ]);
+      const imageResponse = await fetch("/api/images");
 
-      const [imageList, videoList] = await Promise.all([
-        imageResponse.json(),
-        videoResponse.json(),
-      ]);
+      const imageList = await imageResponse.json();
 
       images = imageList;
-      videos = videoList;
     }
 
-    let nextImage = "{{next_image}}";
+    let nextImage = "";
 
     async function fetchNextImage() {
+      if (isLastImage && goToVideosInNextTick) {
+        clearInterval(intervalID);
+
+        setTimeout(() => {
+          window.location.replace("http://localhost:8081/video");
+        }, 4900);
+
+        return;
+      }
+
       const nextImageResponse = await (await fetch("/api/image")).json();
+      console.log("--> ", nextImageResponse.image);
+
+      isLastImage = nextImageResponse.is_last_image ? true : false;
+
+      if (nextImageResponse.can_go_to_videos) {
+        goToVideosInNextTick = true;
+      }
 
       nextImage = nextImageResponse.image;
     }
@@ -98,13 +97,13 @@
     // TODO: Add looping with videos..
 
     async function startSlideShow() {
-      setInterval(() => {
+      intervalID = setInterval(() => {
         document.getElementById("image").src = "static/images/" + nextImage;
 
         fetchNextImage();
       }, 5000);
     }
 
-    startSlideShow();
+    fetchNextImage().then(() => startSlideShow());
   </script>
 </html>

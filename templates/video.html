@@ -38,22 +38,79 @@
       .text {
         font-size: large;
         opacity: 0.8;
+        color: white;
         text-align: center;
       }
     </style>
   </head>
   <body>
     <div class="image_wrapper">
-      <video width="1440" height="900" autoplay muted onended="goToImages()">
-        <source src="static/videos/{{video}}" type="video/mp4" />
+      <video
+        width="1440"
+        height="900"
+        onplay="fetchNextVideo()"
+        autoplay
+        id="video_controller"
+        muted
+        onended="onVideoEnd()"
+      >
+        <source id="video" src="static/videos/{{video}}" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
     <p class="text">azmed.cz</p>
   </body>
   <script type="text/javascript">
-    function goToImages() {
-      window.location.replace("http://localhost:8081/");
+    let goBackToImagesAfterNextVideoEnds = false;
+    let nextVideo = "";
+    let redirect = "{{go_to_images}}" === "True";
+
+    const videoControllerNode = document.getElementById("video_controller");
+
+    async function recoverFromError() {
+      await fetchVideos();
+
+      document.getElementById("image").src = "static/images/" + images[0];
+    }
+
+    async function fetchVideos() {
+      const videoResponse = await fetch("/api/videos");
+
+      const videoList = await videoResponse.json();
+
+      nextVideo = videoList[0];
+
+      onVideoEnd();
+    }
+
+    function onVideoEnd() {
+      if (redirect) {
+        window.location.replace("http://localhost:8081/");
+
+        return;
+      }
+
+      document.getElementById("video").src = "static/videos/" + nextVideo;
+      videoControllerNode.load();
+      videoControllerNode.play();
+    }
+
+    async function fetchNextVideo() {
+      if (goBackToImagesAfterNextVideoEnds) {
+        redirect = true;
+
+        return;
+      }
+
+      const nextVideoResponse = await (await fetch("/api/video")).json();
+
+      console.log({ go_to_images: nextVideoResponse.go_to_images });
+
+      if (nextVideoResponse.go_to_images) {
+        goBackToImagesAfterNextVideoEnds = true;
+      }
+
+      nextVideo = nextVideoResponse.video;
     }
   </script>
 </html>
