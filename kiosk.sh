@@ -22,7 +22,7 @@ python /home/johnny/digital-signage/server.py /mnt/usb/nas &>> /home/johnny/digi
 
 sleep 2
 
-/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081 &
+/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081
 
 
 # Activate the virtual environment
