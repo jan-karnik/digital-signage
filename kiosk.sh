@@ -3,6 +3,9 @@
 # Give Pi a breather so it can connect to networks etc
 sleep 5
 
+sudo mount -t cifs //192.168.40.27/Smartboard /mnt/nas -o username="$1",password="$2"
+sleep 2
+
 # Disable screensaver
 xset s noblank
 xset s off
@@ -19,7 +22,7 @@ echo > logs.txt
 
 python -m pip install -r requirements.txt
 
-python server.py /mnt/usb/nas &>> logs.txt &
+python server.py /mnt/nas &>> logs.txt &
 
 sleep 2
 
