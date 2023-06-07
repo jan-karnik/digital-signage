@@ -19,13 +19,7 @@
         background-color: aliceblue;
       }
 
-      img {
-        width: 90%;
-        height: 90%;
-        object-fit: contain;
-      }
-
-      .image_wrapper {
+      .video_wrapper {
         display: flex;
         width: 100%;
         height: 98vh;
@@ -33,6 +27,10 @@
         align-items: center;
         justify-items: center;
         justify-content: center;
+      }
+
+      .video {
+        width: auto;
       }
 
       .text {
@@ -44,10 +42,9 @@
     </style>
   </head>
   <body>
-    <div class="image_wrapper">
+    <div class="video_wrapper">
       <video
-        width="1440"
-        height="900"
+        class="video"
         onplay="fetchNextVideo()"
         autoplay
         id="video_controller"
@@ -103,8 +100,6 @@
       }
 
       const nextVideoResponse = await (await fetch("/api/video")).json();
-
-      console.log({ go_to_images: nextVideoResponse.go_to_images });
 
       if (nextVideoResponse.go_to_images) {
         goBackToImagesAfterNextVideoEnds = true;

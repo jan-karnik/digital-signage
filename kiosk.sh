@@ -15,10 +15,11 @@ unclutter -idle 0.5 -root &
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/johnny/.config/chromium/Default/Preferences
 sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/johnny/.config/chromium/Default/Preferences
 
+echo > logs.txt
 
-python -m pip install -r /home/johnny/digital-signage/requirements.txt
+python -m pip install -r requirements.txt
 
-python /home/johnny/digital-signage/server.py /mnt/usb/nas &>> /home/johnny/digital-signage/logs.txt &
+python server.py /mnt/usb/nas &>> logs.txt &
 
 sleep 2
 

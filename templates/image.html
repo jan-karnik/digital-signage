@@ -16,12 +16,12 @@
       }
 
       body {
-        background-color: aliceblue;
+        background-color: black;
       }
 
       img {
-        width: 90%;
-        height: 90%;
+        width: 100%;
+        height: 95%;
         object-fit: contain;
       }
 
@@ -83,7 +83,6 @@
       }
 
       const nextImageResponse = await (await fetch("/api/image")).json();
-      console.log("--> ", nextImageResponse.image);
 
       isLastImage = nextImageResponse.is_last_image ? true : false;
 
