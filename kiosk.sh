@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Give Pi a breather so it can connect to networks etc
-# DISPLAY=:0 xrandr --output HDMI-1 --rotate right
+xrandr -o left
 
 sleep 5
 
