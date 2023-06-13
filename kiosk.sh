@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # Give Pi a breather so it can connect to networks etc
+# DISPLAY=:0 xrandr --output HDMI-1 --rotate right
+
 sleep 5
 
-sudo mount -t cifs //192.168.40.27/Smartboard /home/johnny/nas -o username="$1",password="$2",vers=2.0
-sleep 2
+# sudo mount -t cifs //192.168.40.27/Smartboard /home/johnny/nas -o username="$1",password="$2",vers=2.0
+# sleep 2
 
 # Disable screensaver
 xset s noblank
@@ -28,9 +30,6 @@ sleep 2
 
 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081
 
-
-# Activate the virtual environment
-# source /path/to/venv/bin/activate
 
 # Run python script in the background
 # nohup python myscript.py > /dev/null 2>&1 &
