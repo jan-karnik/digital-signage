@@ -1,7 +1,5 @@
 #!/bin/bash
 
-xrandr -o left
-
 # Give Pi a breather so it can connect to networks etc
 sleep 5
 
@@ -27,6 +25,8 @@ python -m pip install -r requirements.txt
 python server.py /home/johnny/nas &>> logs.txt &
 
 sleep 2
+
+xrandr -o left
 
 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8081
 
