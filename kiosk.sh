@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Give Pi a breather so it can connect to networks etc
 xrandr -o left
 
+# Give Pi a breather so it can connect to networks etc
 sleep 5
 
 # sudo mount -t cifs //192.168.40.27/Smartboard /home/johnny/nas -o username="$1",password="$2",vers=2.0
